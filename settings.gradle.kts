@@ -10,7 +10,8 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
 }
 
-rootProject.name = "fork"
+rootProject.name = "slimeworldmanager"
 
-include("fork-api")
-include("fork-server")
+include("plugin","core","api","importer","loaders")
+include("slimeworldmanager-api")
+include("slimeworldmanager-server")
