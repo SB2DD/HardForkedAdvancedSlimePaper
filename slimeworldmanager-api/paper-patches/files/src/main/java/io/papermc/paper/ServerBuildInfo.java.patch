@@ -1,0 +1,14 @@
+--- a/src/main/java/io/papermc/paper/ServerBuildInfo.java
++++ b/src/main/java/io/papermc/paper/ServerBuildInfo.java
+@@ -20,6 +_,11 @@
+     Key BRAND_PAPER_ID = Key.key("papermc", "paper");
+ 
+     /**
++     +     * The brand id for AdvancedSlimePaper.
++     +     */
++    Key BRAND_ADVANCED_SLIME_PAPER_ID = Key.key("infernalsuite", "advancedslimepaper");
++
++    /**
+      * Gets the {@code ServerBuildInfo}.
+      *
+      * @return the {@code ServerBuildInfo}
