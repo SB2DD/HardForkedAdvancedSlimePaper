@@ -6,10 +6,10 @@ build
 
 /run
 
-/fork-server/build.gradle.kts
-/fork-server/src/minecraft
+/slimeworldmanager-server/build.gradle.kts
+/slimeworldmanager-server/src/minecraft
 /paper-server
-/fork-api/build.gradle.kts
+/slimeworldmanager-api/build.gradle.kts
 /paper-api
 /paper-api-generator
 
