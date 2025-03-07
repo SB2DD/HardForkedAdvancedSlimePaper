@@ -1137,7 +1137,7 @@ index 0000000000000000000000000000000000000000..f1db2fe121bb3aabfad727a8133b6455
 \ No newline at end of file
 diff --git a/src/main/java/com/infernalsuite/aswm/level/NMSSlimeWorld.java b/src/main/java/com/infernalsuite/aswm/level/NMSSlimeWorld.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..3d6599b9905664103a43aeff5b0185a26958c5b2
+index 0000000000000000000000000000000000000000..4d3604f3cabf80b0f89f91c7158cd86781674ca0
 --- /dev/null
 +++ b/src/main/java/com/infernalsuite/aswm/level/NMSSlimeWorld.java
 @@ -0,0 +1,91 @@
@@ -1176,7 +1176,7 @@ index 0000000000000000000000000000000000000000..3d6599b9905664103a43aeff5b0185a2
 +
 +    @Override
 +    public SlimeLoader getLoader() {
-+        return this.instance.slimeInstance.getSaveStrategy();
++        return this.instance.slimeInstance.getLoader();
 +    }
 +
 +    @Override
