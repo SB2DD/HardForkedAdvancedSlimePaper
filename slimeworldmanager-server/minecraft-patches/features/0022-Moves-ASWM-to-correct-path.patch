@@ -1,0 +1,270 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: SB2DD <45701824+Mrredstone5230@users.noreply.github.com>
+Date: Fri, 7 Mar 2025 12:30:40 -0500
+Subject: [PATCH] Moves ASWM to correct path
+
+
+diff --git a/src/main/java/com/infernalsuite/aswm/AdvancedSlimePaper.java b/com/infernalsuite/aswm/AdvancedSlimePaper.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/AdvancedSlimePaper.java
+rename to com/infernalsuite/aswm/AdvancedSlimePaper.java
+index 85a5b184a1795fe3756596634e883757a980525b..f876430893191f32d7ade9d618eeab8c504e8e59 100644
+--- a/src/main/java/com/infernalsuite/aswm/AdvancedSlimePaper.java
++++ b/com/infernalsuite/aswm/AdvancedSlimePaper.java
+@@ -2,8 +2,8 @@ package com.infernalsuite.aswm;
+ 
+ import com.flowpowered.nbt.CompoundMap;
+ import com.flowpowered.nbt.CompoundTag;
+-import com.infernalsuite.aswm.api.SlimeNMSBridge;
+ import com.infernalsuite.aswm.api.AdvancedSlimePaperAPI;
++import com.infernalsuite.aswm.api.SlimeNMSBridge;
+ import com.infernalsuite.aswm.api.events.LoadSlimeWorldEvent;
+ import com.infernalsuite.aswm.api.exceptions.*;
+ import com.infernalsuite.aswm.api.loaders.SlimeLoader;
+diff --git a/src/main/java/com/infernalsuite/aswm/Converter.java b/com/infernalsuite/aswm/Converter.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/Converter.java
+rename to com/infernalsuite/aswm/Converter.java
+diff --git a/src/main/java/com/infernalsuite/aswm/InternalPlugin.java b/com/infernalsuite/aswm/InternalPlugin.java
+similarity index 95%
+rename from src/main/java/com/infernalsuite/aswm/InternalPlugin.java
+rename to com/infernalsuite/aswm/InternalPlugin.java
+index 875960d0c9fdcbcb3250abc05cfbde48eec0f15a..b899f5b2cb7ebd2c7a532226091bed46163b727c 100644
+--- a/src/main/java/com/infernalsuite/aswm/InternalPlugin.java
++++ b/com/infernalsuite/aswm/InternalPlugin.java
+@@ -8,18 +8,14 @@ import org.bukkit.command.CommandSender;
+ import org.bukkit.configuration.file.FileConfiguration;
+ import org.bukkit.generator.BiomeProvider;
+ import org.bukkit.generator.ChunkGenerator;
+-import org.bukkit.plugin.Plugin;
+-import org.bukkit.plugin.PluginBase;
+-import org.bukkit.plugin.PluginDescriptionFile;
+-import org.bukkit.plugin.PluginLoader;
+-import org.bukkit.plugin.PluginLogger;
++import org.bukkit.plugin.*;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+ 
+-import java.util.logging.LogRecord;
+ import java.io.File;
+ import java.io.InputStream;
+ import java.util.List;
++import java.util.logging.LogRecord;
+ 
+ public class InternalPlugin extends PluginBase {
+     private boolean enabled = true;
+diff --git a/src/main/java/com/infernalsuite/aswm/SimpleDataFixerConverter.java b/com/infernalsuite/aswm/SimpleDataFixerConverter.java
+similarity index 88%
+rename from src/main/java/com/infernalsuite/aswm/SimpleDataFixerConverter.java
+rename to com/infernalsuite/aswm/SimpleDataFixerConverter.java
+index eb441905b43c0f2f7edc104a34f78a18d8f3bedf..66b7de6cc5138c087b559a4c5a7723828a959d3c 100644
+--- a/src/main/java/com/infernalsuite/aswm/SimpleDataFixerConverter.java
++++ b/com/infernalsuite/aswm/SimpleDataFixerConverter.java
+@@ -5,21 +5,19 @@ import ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry;
+ import ca.spottedleaf.dataconverter.minecraft.walkers.generic.WalkerUtils;
+ import ca.spottedleaf.dataconverter.types.nbt.NBTMapType;
+ import com.flowpowered.nbt.CompoundTag;
++import com.infernalsuite.aswm.api.world.SlimeChunk;
++import com.infernalsuite.aswm.api.world.SlimeChunkSection;
++import com.infernalsuite.aswm.api.world.SlimeWorld;
+ import com.infernalsuite.aswm.serialization.SlimeWorldReader;
+ import com.infernalsuite.aswm.skeleton.SkeletonSlimeWorld;
+ import com.infernalsuite.aswm.skeleton.SlimeChunkSectionSkeleton;
+ import com.infernalsuite.aswm.skeleton.SlimeChunkSkeleton;
+-import com.infernalsuite.aswm.api.world.SlimeChunk;
+-import com.infernalsuite.aswm.api.world.SlimeChunkSection;
+-import com.infernalsuite.aswm.api.world.SlimeWorld;
+ import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+ import net.minecraft.SharedConstants;
+ 
+ import java.util.ArrayList;
+-import java.util.HashMap;
+ import java.util.List;
+-import java.util.Map;
+ import java.util.function.Consumer;
+ 
+ class SimpleDataFixerConverter implements SlimeWorldReader<SlimeWorld> {
+@@ -58,11 +56,11 @@ class SimpleDataFixerConverter implements SlimeWorldReader<SlimeWorld> {
+                 SlimeChunkSection dataSection = chunk.getSections()[i];
+                 if (dataSection == null) continue;
+ 
+-                com.flowpowered.nbt.CompoundTag blockStateTag = blockStateTag = convertAndBack(dataSection.getBlockStatesTag(), (tag) -> {
++                CompoundTag blockStateTag = blockStateTag = convertAndBack(dataSection.getBlockStatesTag(), (tag) -> {
+                     WalkerUtils.convertList(MCTypeRegistry.BLOCK_STATE, new NBTMapType(tag), "palette", encodedCurrentVersion, encodedNewVersion);
+                 });
+ 
+-                com.flowpowered.nbt.CompoundTag biomeTag = convertAndBack(dataSection.getBiomeTag(), (tag) -> {
++                CompoundTag biomeTag = convertAndBack(dataSection.getBiomeTag(), (tag) -> {
+                     WalkerUtils.convertList(MCTypeRegistry.BIOME, new NBTMapType(tag), "palette", encodedCurrentVersion, encodedNewVersion);
+                 });
+ 
+@@ -99,7 +97,7 @@ class SimpleDataFixerConverter implements SlimeWorldReader<SlimeWorld> {
+     }
+ 
+ 
+-    private static com.flowpowered.nbt.CompoundTag convertAndBack(com.flowpowered.nbt.CompoundTag value, Consumer<net.minecraft.nbt.CompoundTag> acceptor) {
++    private static CompoundTag convertAndBack(CompoundTag value, Consumer<net.minecraft.nbt.CompoundTag> acceptor) {
+         if (value == null) {
+             return null;
+         }
+@@ -107,6 +105,6 @@ class SimpleDataFixerConverter implements SlimeWorldReader<SlimeWorld> {
+         net.minecraft.nbt.CompoundTag converted = (net.minecraft.nbt.CompoundTag) Converter.convertTag(value);
+         acceptor.accept(converted);
+ 
+-        return (com.flowpowered.nbt.CompoundTag) Converter.convertTag(value.getName(), converted);
++        return (CompoundTag) Converter.convertTag(value.getName(), converted);
+     }
+ }
+\ No newline at end of file
+diff --git a/src/main/java/com/infernalsuite/aswm/SlimeNMSBridgeImpl.java b/com/infernalsuite/aswm/SlimeNMSBridgeImpl.java
+similarity index 99%
+rename from src/main/java/com/infernalsuite/aswm/SlimeNMSBridgeImpl.java
+rename to com/infernalsuite/aswm/SlimeNMSBridgeImpl.java
+index 7b65a8d9137cd160b1c69dfafe70c693e9cfd508..e73cb2589f1397757f17206ba2d33691a96b0921 100644
+--- a/src/main/java/com/infernalsuite/aswm/SlimeNMSBridgeImpl.java
++++ b/com/infernalsuite/aswm/SlimeNMSBridgeImpl.java
+@@ -29,8 +29,6 @@ import net.minecraft.world.level.levelgen.WorldOptions;
+ import net.minecraft.world.level.storage.CommandStorage;
+ import net.minecraft.world.level.storage.DimensionDataStorage;
+ import net.minecraft.world.level.storage.PrimaryLevelData;
+-import org.apache.logging.log4j.LogManager;
+-import org.apache.logging.log4j.Logger;
+ import org.bukkit.Bukkit;
+ import org.bukkit.World;
+ import org.bukkit.craftbukkit.CraftWorld;
+diff --git a/src/main/java/com/infernalsuite/aswm/level/ChunkDataLoadTask.java b/com/infernalsuite/aswm/level/ChunkDataLoadTask.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/level/ChunkDataLoadTask.java
+rename to com/infernalsuite/aswm/level/ChunkDataLoadTask.java
+diff --git a/src/main/java/com/infernalsuite/aswm/level/CommonLoadTask.java b/com/infernalsuite/aswm/level/CommonLoadTask.java
+similarity index 83%
+rename from src/main/java/com/infernalsuite/aswm/level/CommonLoadTask.java
+rename to com/infernalsuite/aswm/level/CommonLoadTask.java
+index ceaa09deabf53f061185639660a7706c3ff27801..ecdf822e080790038abd9a8740afb1b0d4a5d22d 100644
+--- a/src/main/java/com/infernalsuite/aswm/level/CommonLoadTask.java
++++ b/com/infernalsuite/aswm/level/CommonLoadTask.java
+@@ -1,6 +1,5 @@
+ package com.infernalsuite.aswm.level;
+ 
+-import ca.spottedleaf.concurrentutil.executor.PrioritisedExecutor;
+ import ca.spottedleaf.concurrentutil.util.Priority;
+ 
+ public interface CommonLoadTask {
+diff --git a/src/main/java/com/infernalsuite/aswm/level/FastChunkPruner.java b/com/infernalsuite/aswm/level/FastChunkPruner.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/level/FastChunkPruner.java
+rename to com/infernalsuite/aswm/level/FastChunkPruner.java
+diff --git a/src/main/java/com/infernalsuite/aswm/level/NMSSlimeChunk.java b/com/infernalsuite/aswm/level/NMSSlimeChunk.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/level/NMSSlimeChunk.java
+rename to com/infernalsuite/aswm/level/NMSSlimeChunk.java
+diff --git a/src/main/java/com/infernalsuite/aswm/level/NMSSlimeWorld.java b/com/infernalsuite/aswm/level/NMSSlimeWorld.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/level/NMSSlimeWorld.java
+rename to com/infernalsuite/aswm/level/NMSSlimeWorld.java
+diff --git a/src/main/java/com/infernalsuite/aswm/level/SafeNmsChunkWrapper.java b/com/infernalsuite/aswm/level/SafeNmsChunkWrapper.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/level/SafeNmsChunkWrapper.java
+rename to com/infernalsuite/aswm/level/SafeNmsChunkWrapper.java
+diff --git a/src/main/java/com/infernalsuite/aswm/level/SlimeBootstrap.java b/com/infernalsuite/aswm/level/SlimeBootstrap.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/level/SlimeBootstrap.java
+rename to com/infernalsuite/aswm/level/SlimeBootstrap.java
+diff --git a/src/main/java/com/infernalsuite/aswm/level/SlimeChunkConverter.java b/com/infernalsuite/aswm/level/SlimeChunkConverter.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/level/SlimeChunkConverter.java
+rename to com/infernalsuite/aswm/level/SlimeChunkConverter.java
+diff --git a/src/main/java/com/infernalsuite/aswm/level/SlimeChunkLevel.java b/com/infernalsuite/aswm/level/SlimeChunkLevel.java
+similarity index 100%
+rename from src/main/java/com/infernalsuite/aswm/level/SlimeChunkLevel.java
+rename to com/infernalsuite/aswm/level/SlimeChunkLevel.java
+diff --git a/src/main/java/com/infernalsuite/aswm/level/SlimeInMemoryWorld.java b/com/infernalsuite/aswm/level/SlimeInMemoryWorld.java
+similarity index 99%
+rename from src/main/java/com/infernalsuite/aswm/level/SlimeInMemoryWorld.java
+rename to com/infernalsuite/aswm/level/SlimeInMemoryWorld.java
+index 8c71a932d49d55d861910712d3f482d39b62ad65..2fecb852b083a5ef75b77db2c3cbb49b6f2eabc0 100644
+--- a/src/main/java/com/infernalsuite/aswm/level/SlimeInMemoryWorld.java
++++ b/com/infernalsuite/aswm/level/SlimeInMemoryWorld.java
+@@ -6,15 +6,15 @@ import com.infernalsuite.aswm.Converter;
+ import com.infernalsuite.aswm.Util;
+ import com.infernalsuite.aswm.api.exceptions.WorldAlreadyExistsException;
+ import com.infernalsuite.aswm.api.loaders.SlimeLoader;
++import com.infernalsuite.aswm.api.world.SlimeChunk;
++import com.infernalsuite.aswm.api.world.SlimeWorld;
++import com.infernalsuite.aswm.api.world.SlimeWorldInstance;
++import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap;
+ import com.infernalsuite.aswm.pdc.FlowPersistentDataContainer;
+ import com.infernalsuite.aswm.serialization.slime.SlimeSerializer;
+ import com.infernalsuite.aswm.skeleton.SkeletonCloning;
+ import com.infernalsuite.aswm.skeleton.SkeletonSlimeWorld;
+ import com.infernalsuite.aswm.skeleton.SlimeChunkSkeleton;
+-import com.infernalsuite.aswm.api.world.SlimeChunk;
+-import com.infernalsuite.aswm.api.world.SlimeWorld;
+-import com.infernalsuite.aswm.api.world.SlimeWorldInstance;
+-import com.infernalsuite.aswm.api.world.properties.SlimePropertyMap;
+ import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+ import net.minecraft.world.level.block.Block;
+@@ -29,9 +29,7 @@ import org.jetbrains.annotations.NotNull;
+ import java.io.IOException;
+ import java.util.ArrayList;
+ import java.util.Collection;
+-import java.util.HashMap;
+ import java.util.List;
+-import java.util.Map;
+ 
+ /*
+ The concept of this is a bit flawed, since ideally this should be a 1:1 representation of the MC world.
+diff --git a/src/main/java/com/infernalsuite/aswm/level/SlimeLevelGenerator.java b/com/infernalsuite/aswm/level/SlimeLevelGenerator.java
+similarity index 96%
+rename from src/main/java/com/infernalsuite/aswm/level/SlimeLevelGenerator.java
+rename to com/infernalsuite/aswm/level/SlimeLevelGenerator.java
+index aa3ed7005ddfda74b2c3ca1e1dde810c62aa1ce7..757aff691a1feed0a5a8d6c322679eee9840741e 100644
+--- a/src/main/java/com/infernalsuite/aswm/level/SlimeLevelGenerator.java
++++ b/com/infernalsuite/aswm/level/SlimeLevelGenerator.java
+@@ -1,6 +1,5 @@
+ package com.infernalsuite.aswm.level;
+ 
+-import com.mojang.serialization.Codec;
+ import com.mojang.serialization.MapCodec;
+ import net.minecraft.core.Holder;
+ import net.minecraft.world.level.biome.Biome;
+diff --git a/src/main/java/com/infernalsuite/aswm/level/SlimeLevelInstance.java b/com/infernalsuite/aswm/level/SlimeLevelInstance.java
+similarity index 99%
+rename from src/main/java/com/infernalsuite/aswm/level/SlimeLevelInstance.java
+rename to com/infernalsuite/aswm/level/SlimeLevelInstance.java
+index 2821d953e8b01cadf171508ac0b8e1eda6201970..3b6c5aa91cf585864bdf3a85ce521bdc68b0e86a 100644
+--- a/src/main/java/com/infernalsuite/aswm/level/SlimeLevelInstance.java
++++ b/com/infernalsuite/aswm/level/SlimeLevelInstance.java
+@@ -1,6 +1,5 @@
+ package com.infernalsuite.aswm.level;
+ 
+-import ca.spottedleaf.concurrentutil.executor.PrioritisedExecutor;
+ import ca.spottedleaf.concurrentutil.util.Priority;
+ import ca.spottedleaf.moonrise.patches.chunk_system.scheduling.ChunkTaskScheduler;
+ import ca.spottedleaf.moonrise.patches.chunk_system.scheduling.task.ChunkLoadTask;
+diff --git a/src/main/java/com/infernalsuite/aswm/util/NmsUtil.java b/com/infernalsuite/aswm/util/NmsUtil.java
+similarity index 93%
+rename from src/main/java/com/infernalsuite/aswm/util/NmsUtil.java
+rename to com/infernalsuite/aswm/util/NmsUtil.java
+index 4a5a6f208ad91fd861bd6f2b2c008ef14a547d6e..a426d96b7f8cde7cb35b0688ed2b6d206f28f44a 100644
+--- a/src/main/java/com/infernalsuite/aswm/util/NmsUtil.java
++++ b/com/infernalsuite/aswm/util/NmsUtil.java
+@@ -2,8 +2,6 @@ package com.infernalsuite.aswm.util;
+ 
+ import com.infernalsuite.aswm.InternalPlugin;
+ import org.bukkit.Bukkit;
+-import org.bukkit.craftbukkit.scheduler.CraftScheduler;
+-import org.bukkit.plugin.Plugin;
+ 
+ import java.util.concurrent.CountDownLatch;
+ 
+diff --git a/src/main/resources/META-INF/services/com.infernalsuite.aswm.api.AdvancedSlimePaperAPI b/src/main/resources/META-INF/services/com.infernalsuite.aswm.api.AdvancedSlimePaperAPI
+deleted file mode 100644
+index a01c19e4ddbc844c71ba3a0db6efb2a8082091cf..0000000000000000000000000000000000000000
+--- a/src/main/resources/META-INF/services/com.infernalsuite.aswm.api.AdvancedSlimePaperAPI
++++ /dev/null
+@@ -1 +0,0 @@
+-com.infernalsuite.aswm.AdvancedSlimePaper
+\ No newline at end of file
