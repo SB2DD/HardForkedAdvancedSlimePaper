@@ -8,7 +8,7 @@ dependencies {
     api("com.flowpowered:flow-nbt:2.0.2")
     api("org.jetbrains:annotations:23.0.0")
 
-    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
 }
 
 version = "3.0.0-SNAPSHOT"

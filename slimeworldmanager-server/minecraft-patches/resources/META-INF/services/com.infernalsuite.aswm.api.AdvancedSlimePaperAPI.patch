@@ -1,0 +1,4 @@
+--- /dev/null
++++ b/META-INF/services/com.infernalsuite.aswm.api.AdvancedSlimePaperAPI
+@@ -1,0 +_,1 @@
++com.infernalsuite.aswm.AdvancedSlimePaper
